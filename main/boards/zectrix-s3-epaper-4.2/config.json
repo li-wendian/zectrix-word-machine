@@ -1,0 +1,14 @@
+{
+    "target": "esp32s3",
+    "builds": [
+        {
+            "name": "zectrix-s3-epaper-4.2",
+            "sdkconfig_append": [
+                "CONFIG_PARTITION_TABLE_CUSTOM=y",
+                "CONFIG_PARTITION_TABLE_CUSTOM_FILENAME=\"partitions/v2/16m.csv\"",
+                "CONFIG_PARTITION_TABLE_FILENAME=\"partitions/v2/16m.csv\"",
+                "CONFIG_OTA_URL=\"https://ota.zectrix.com/zectrix-word-machine/ota/\""
+            ]
+        }
+    ]
+}

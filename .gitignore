@@ -1,0 +1,27 @@
+# ESP-IDF build output
+build/
+managed_components/
+releases/
+sdkconfig
+sdkconfig.old
+main/boards/*/config.build.sh.*.json
+
+# Local configuration and secrets
+.env
+*.local
+
+# Editor state with machine-specific paths
+.vscode/
+.idea/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Private CI/deployment config
+.cnb.yml
+

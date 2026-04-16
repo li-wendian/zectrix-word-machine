@@ -1,0 +1,11 @@
+menu "Zectrix Word Machine"
+
+config BOARD_TYPE_ZECTRIX_S3_EPAPER_4_2
+    bool "zectrix-s3-epaper-4.2 firmware"
+    default y
+    depends on IDF_TARGET_ESP32S3
+    help
+        This repository targets the Zectrix S3 4.2-inch e-paper vocabulary device
+        for the zectrix-s3-epaper-4.2 board.
+
+endmenu

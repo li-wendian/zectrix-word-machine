@@ -1,0 +1,10 @@
+*.sh text eol=lf
+*.py text eol=lf
+*.cc text eol=lf
+*.h text eol=lf
+*.cmake text eol=lf
+CMakeLists.txt text eol=lf
+
+main/vocabulary/kaoyan_full_deck.inc linguist-generated=true
+main/components/78__xiaozhi-fonts/src/*.c linguist-generated=true
+
