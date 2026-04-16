@@ -109,8 +109,8 @@ void ReviewScheduler::ApplyAnswer(ReviewState* state, bool known, int32_t today)
         state->status = ReviewStatus::kLearning;
         state->correct_streak = 0;
         state->lapses = ClampInterval(static_cast<uint32_t>(state->lapses) + 1);
-        state->interval_days = 1;
-        state->due_day = today + 1;
+        state->interval_days = 0;
+        state->due_day = today;
         return;
     }
 

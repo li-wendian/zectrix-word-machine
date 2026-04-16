@@ -24,7 +24,9 @@ private:
     void PublishSnapshotLocked(bool full_refresh);
     VocabularySnapshot BuildSnapshotLocked() const;
     void ScoreCurrentLocked(bool known);
+    void MissCurrentLocked();
     void DeferCurrentLocked();
+    void RequeueCurrentIndexLocked(size_t word_index);
     void MoveCardLocked(int delta);
     void EnterSettingsLocked();
     void HandleSettingsButtonLocked(VocabularyButton button);

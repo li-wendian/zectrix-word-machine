@@ -113,10 +113,18 @@ void VocabularyApp::HandleButton(VocabularyButton button) {
             }
             break;
         case VocabularyButton::kUpClick:
-            MoveCardLocked(-1);
+            if (showing_back_) {
+                MissCurrentLocked();
+            } else {
+                MoveCardLocked(-1);
+            }
             break;
         case VocabularyButton::kDownClick:
-            MoveCardLocked(1);
+            if (showing_back_) {
+                DeferCurrentLocked();
+            } else {
+                MoveCardLocked(1);
+            }
             break;
         case VocabularyButton::kUpLongPress:
             last_up_long_ms_ = now_ms;
@@ -288,12 +296,34 @@ void VocabularyApp::ScoreCurrentLocked(bool known) {
     showing_back_ = false;
 }
 
+void VocabularyApp::MissCurrentLocked() {
+    if (queue_.empty() || queue_pos_ >= queue_.size()) {
+        return;
+    }
+
+    const size_t word_index = queue_[queue_pos_];
+    if (word_index >= states_.size()) {
+        return;
+    }
+
+    scheduler_.ApplyAnswer(&states_[word_index], false, today_);
+    sync_client_.MarkPending();
+    (void)progress_store_.Save(states_, stats_);
+
+    RequeueCurrentIndexLocked(word_index);
+    PlayCueLocked(false, false);
+}
+
 void VocabularyApp::DeferCurrentLocked() {
     if (queue_.empty() || queue_pos_ >= queue_.size()) {
         return;
     }
 
     const size_t word_index = queue_[queue_pos_];
+    RequeueCurrentIndexLocked(word_index);
+}
+
+void VocabularyApp::RequeueCurrentIndexLocked(size_t word_index) {
     queue_.erase(queue_.begin() + static_cast<std::ptrdiff_t>(queue_pos_));
     if (queue_.empty()) {
         queue_.push_back(word_index);
@@ -312,13 +342,6 @@ void VocabularyApp::DeferCurrentLocked() {
 
 void VocabularyApp::MoveCardLocked(int delta) {
     if (queue_.empty()) {
-        return;
-    }
-    if (showing_back_) {
-        DeferCurrentLocked();
-        if (delta < 0 && !queue_.empty()) {
-            queue_pos_ = (queue_pos_ == 0) ? queue_.size() - 1 : queue_pos_ - 1;
-        }
         return;
     }
     if (delta < 0) {
