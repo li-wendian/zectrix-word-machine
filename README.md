@@ -6,6 +6,8 @@
 
 当前固件内置考研英语词库，主界面是单词卡片复习，支持顺序/随机背词、每日目标、复习进度保存和 NFC 入口链接。代码中保留了 Wi-Fi 配网与 OTA 相关配置基础，但当前使用方式以离线背词为主。
 
+![Zectrix 单词机实物图](docs/assets/zectrix-word-machine.jpg)
+
 本文适用于 `zectrix-s3-epaper-4.2` 固件。
 
 ## 1. 首次使用
